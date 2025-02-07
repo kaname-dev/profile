@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business card</title>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+            /* スクロールを無効に */
+        }
+
+        .card-container {
+            position: relative;
+            width: 300px;
+            height: 180px;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            cursor: grab;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            margin-top: 10%;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transition: transform 0.3s ease-out;
+            border-radius: 10px;
+        }
+
+        .card.front {
+            background: url('assets/front_image.png') no-repeat center center;
+            background-size: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.back {
+            background: url('assets/back_image.png') no-repeat center center;
+            background-size: cover;
+            transform: rotateY(180deg);
+            box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* アイコンボタンのスタイル */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-image: url('assets/close_300dp_434343.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            cursor: pointer;
+        }
+
+        /* メッセージのスタイル */
+        .message {
+            position: absolute;
+            bottom: 20%;
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            opacity: 0;  /* 最初は非表示 */
+            transition: opacity 1s ease-in-out;  /* フェードインのアニメーション */
+        }
+
+        @media (max-width: 768px) {
+            .card-container {
+                margin-top: 30%;
+                
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- アイコンボタン -->
+    <div class="close-btn" onclick="goBack()"></div>
+
+    <div class="card-container" id="card-container">
+        <div class="card front"></div>
+        <div class="card back"></div>
+    </div>
+
+    <!-- メッセージ -->
+    <div class="message" id="message">
+        名刺(画像)を長押しして保存<br>
+        Long press the business card (image) to save it
+    </div>
+
+    <script>
+        let isDragging = false;
+        let startX, startY;
+        let rotationX = 0, rotationY = 0;
+        let lastX = 0, lastY = 0;
+        let velocityX = 0, velocityY = 0;
+        let inertia = 0.9;
+        let inertiaX = 0, inertiaY = 0;
+
+        let autoRotate = false;
+        let rotationInterval;
+        let rotationCompleted = 0;  // 何回転したかをカウント
+        let initialSpeed = 100; // 最初の回転速度
+        let decelerationFactor = 0.03; // 放物線的な減速係数
+        let timeElapsed = 0; // 時間経過を追跡
+
+        const cardContainer = document.getElementById('card-container');
+        const message = document.getElementById('message');
+
+        // 回転速度の設定
+        const dragSpeed = 0.3;  // ユーザーによる回転速度 (値を変更することで回転速度が変わります)
+
+        const startDrag = (e) => {
+            isDragging = true;
+            startX = e.clientX || e.touches[0].clientX;
+            startY = e.clientY || e.touches[0].clientY;
+            lastX = startX;
+            lastY = startY;
+            cardContainer.style.cursor = 'grabbing';
+
+            // 自動回転を停止
+            autoRotate = false;
+            rotationCompleted = 0;
+            clearInterval(rotationInterval);
+        };
+
+        const drag = (e) => {
+            if (!isDragging) return;
+
+            const currentX = e.clientX || e.touches[0].clientX;
+            const currentY = e.clientY || e.touches[0].clientY;
+
+            const deltaX = currentX - lastX;
+            const deltaY = currentY - lastY;
+
+            // 回転速度の変更
+            rotationY += deltaX * dragSpeed; // ドラッグによる回転速度
+            rotationX -= deltaY * dragSpeed; // ドラッグによる回転速度
+
+            rotationX = Math.max(-30, Math.min(30, rotationX));
+
+            cardContainer.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+
+            velocityX = deltaX;
+            velocityY = deltaY;
+
+            lastX = currentX;
+            lastY = currentY;
+        };
+
+        const endDrag = () => {
+            isDragging = false;
+            cardContainer.style.cursor = 'grab';
+
+            inertiaX = velocityX * inertia;
+            inertiaY = velocityY * inertia;
+
+            requestAnimationFrame(applyInertia);
+        };
+
+        const applyInertia = () => {
+            if (Math.abs(inertiaX) > 0.1 || Math.abs(inertiaY) > 0.1) {
+                rotationY += inertiaX;
+                rotationX -= inertiaY;
+
+                inertiaX *= inertia;
+                inertiaY *= inertia;
+
+                cardContainer.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+
+                requestAnimationFrame(applyInertia);
+            } else {
+                showMessage();  // 慣性が終わったらメッセージを表示
+            }
+        };
+
+        // 自動回転の実装
+        const autoRotateCard = () => {
+            if (autoRotate) {
+                timeElapsed += 1; // 時間経過を追跡
+
+                rotationY += initialSpeed; // 初期回転速度
+
+                // 放物線的な減速（速度が減少）
+                initialSpeed -= decelerationFactor * timeElapsed;
+
+                // 最小速度を設定（0未満にならないように）
+                if (initialSpeed < 2.5) {
+                    initialSpeed = 2.5;
+                }
+
+                // 回転が1回転を超えたらリセット
+                if (Math.abs(rotationY) >= 360) {
+                    rotationY = 0;
+                    rotationCompleted += 1;
+                }
+
+                // 15回転したら停止
+                if (rotationCompleted >= 14) {
+                    autoRotate = false;
+                    showMessage();  // 回転終了後にメッセージを表示
+                }
+
+                cardContainer.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+            }
+        };
+
+        // ページが表示されたときに自動回転を開始
+        document.addEventListener('DOMContentLoaded', () => {
+            autoRotate = true;  // ページ表示時に自動回転を開始
+            rotationInterval = setInterval(autoRotateCard, 30); // 自動回転開始
+        });
+
+        // マウスイベント
+        cardContainer.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', drag);
+        window.addEventListener('mouseup', endDrag);
+        cardContainer.addEventListener('mouseleave', endDrag);
+
+        // タッチイベント
+        cardContainer.addEventListener('touchstart', startDrag);
+        window.addEventListener('touchmove', drag);
+        window.addEventListener('touchend', endDrag);
+        cardContainer.addEventListener('touchleave', endDrag);
+
+        // メッセージをフェードイン
+        const showMessage = () => {
+            // デバイスに応じてメッセージを変更
+            if (window.innerWidth <= 768) {
+                message.innerHTML = "名刺(画像)を長押しして保存<br>Long press the business card (image) to save it";
+            } else {
+                message.innerHTML = "名刺(画像)を右クリックして保存<br>Right click the business card (image) to save it";
+            }
+            message.style.opacity = 1;  // メッセージを表示
+        };
+
+        // 前のページに戻る関数
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
