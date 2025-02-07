@@ -76,14 +76,16 @@
             font-size: 18px;
             color: #333;
             font-weight: bold;
-            opacity: 0;  /* 最初は非表示 */
-            transition: opacity 1s ease-in-out;  /* フェードインのアニメーション */
+            opacity: 0;
+            /* 最初は非表示 */
+            transition: opacity 1s ease-in-out;
+            /* フェードインのアニメーション */
         }
 
         @media (max-width: 768px) {
             .card-container {
                 margin-top: 30%;
-                
+
             }
         }
     </style>
@@ -93,7 +95,7 @@
     <!-- アイコンボタン -->
     <div class="close-btn" onclick="goBack()"></div>
 
-    <div class="card-container" id="card-container">
+    <div class="card-container" id="card-container" onclick="addToWallet()">
         <div class="card front"></div>
         <div class="card back"></div>
     </div>
@@ -240,9 +242,13 @@
         cardContainer.addEventListener('touchleave', endDrag);
 
         // メッセージをフェードイン
+        // メッセージをフェードイン
         const showMessage = () => {
-            // デバイスに応じてメッセージを変更
-            if (window.innerWidth <= 768) {
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            if (isIOS) {
+                message.innerHTML = "名刺をタップしてウォレットに追加<br>Tap the business card to add to Apple Wallet<br>OR<br>長押しして画像として保存<br>Long press to save as image";
+            } else if (window.innerWidth <= 768) {
                 message.innerHTML = "名刺(画像)を長押しして保存<br>Long press the business card (image) to save it";
             } else {
                 message.innerHTML = "名刺(画像)を右クリックして保存<br>Right click the business card (image) to save it";
@@ -254,6 +260,18 @@
         function goBack() {
             window.history.back();
         }
+
+
+        function addToWallet() {
+            const pkpassUrl = 'assets/pass.pkpass';  // .pkpass のパス
+            const a = document.createElement('a');
+            a.href = pkpassUrl;
+            a.download = 'business_card.pkpass';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
     </script>
 </body>
 
