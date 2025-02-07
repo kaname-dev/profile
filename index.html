@@ -1,162 +1,32 @@
 <!DOCTYPE html>
 <html lang="jp">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile</title>
-  <style>
-    html {
-      padding-top: 8%;
-      /* ここで上部の余白を設定 */
-    }
-
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0 auto;
-      /* 左右中央寄せ */
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      /* 上寄せ */
-      align-items: center;
-      min-height: 100vh;
-      /* ビューポートの高さを確保 */
-      background-color: #f4f4f9;
-      overflow-x: hidden;
-      /* 横スクロールを無効化 */
-      text-align: center;
-      width: 100%;
-      max-width: 600px;
-      /* 最大幅を600pxに制限 */
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      box-sizing: border-box;
-    }
-
-    .profile-img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 0px;
-      object-fit: cover;
-    }
-
-    .name {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #777;
-      margin: 10px 0;
-    }
-
-    .bio {
-      font-size: 1rem;
-      color: #777;
-      margin-bottom: 20px;
-    }
-
-    .social-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 0px;
-      width: 90%;
-    }
-
-    .social-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      font-size: 1rem;
-      color: #777;
-      padding: 10px 10px;
-      border-radius: 10px;
-      background-color: #ffffff;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s, box-shadow 0.3s;
-      width: 100%;
-      /* 幅を100%に設定 */
-      box-sizing: border-box;
-    }
-
-    .social-link img {
-      width: 34px;
-      height: 34px;
-      margin-right: 10px;
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-      border-radius: 20%;
-    }
-
-    .social-link:hover {
-      background-color: #e4e4e4;
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    /* インスタボタンの選択肢を隠す */
-    .instagram-options {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-      align-items: center;
-    }
-
-    .show {
-      display: flex;
-    }
-
-    .video-title {
-      font-size: 1.0rem;
-      font-weight: bold;
-      color: #777;
-      margin-top: 10%;
-    }
-
-    iframe {
-      margin-top: 20px;
-      width: 90%;
-      height: 480px;
-      /* 高さを調整 */
-      border: none;
-      border-radius: 10px;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        max-width: 100%;
-        /* モバイル端末では最大幅を100%に設定 */
-        padding: 10px;
-        /* モバイル用に余白を調整 */
-      }
-
-      .name {
-        font-size: 1.5rem;
-      }
-
-      .bio {
-        font-size: 0.9rem;
-      }
-
-      .social-link {
-        width: 100%;
-        justify-content: flex-start;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <!-- アイコン画像 -->
   <img src="assets/icon.png" alt="Profile Picture" class="profile-img">
 
-  <!-- 名前 -->
-  <div class="name">Kaname</div>
-
+  <!-- 名前とアイコンを囲むコンテナ -->
+  <div class="name-container">
+    <div class="name">Kaname</div>
+    <!-- カードアイコン（クリックでother_page.htmlへ遷移） -->
+    <a href="business card.html" class="icon-container">
+        <img id="toggle-icon" src="assets/add_card_300dp_434343.svg" alt="Card Icon">
+    </a>
+</div>
+  
   <!-- プロフィール -->
-  <div class="bio">Software Developer<br>LLM,App Dev/Investor<br>
-    Python,Dart ,C++, C#, JavaScript</div>
+  <div class="bio">Software Developer<br>LLM, App Dev/Investor<br>
+    Python, Dart, C++, C#, JavaScript
+  </div>
+
+
+
+
 
   <!-- SNSリンクボタン -->
   <div class="social-links">
@@ -168,9 +38,10 @@
     </a>
 
     <!-- Instagram 選択ボタン -->
-    <a href="#" class="social-link" onclick="toggleInstagramOptions(event)">
+    <a href="#" class="social-link" id="instagram-toggle">
       <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com" alt="Instagram"> Instagram
     </a>
+
     <!-- Instagram の選択肢 -->
     <div class="instagram-options" id="instagram-options">
       <a href="https://www.instagram.com/kay_codes" target="_blank" class="social-link">
@@ -180,34 +51,28 @@
         <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com" alt="Instagram"> Instagram (private)
       </a>
     </div>
-    <!--<a href="https://github.com/kanamecode?tab=repositories" target="_blank" class="social-link">
-      <img src="https://www.google.com/s2/favicons?sz=64&domain=github.io" alt="YouTube"> GitHub
-    </a>-->
+
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdHYBuqtSKHc8w_M9laIi5jvYeuahvczxdw-ZBggr0nQp4Uw/viewform"
       target="_blank" class="social-link">
-      <img src="assets\email_200dp_9DC384.svg" alt="YouTube"> Contact
+      <img src="assets/email_200dp_9DC384.svg" alt="Contact"> Contact
     </a>
   </div>
-
 
   <div class="video-title">
     <h2>My Projects</h2>
     <a href="https://github.com/kanamecode?tab=repositories" target="_blank" class="social-link"
-      style="display: inline-flex; align-items: center;  width: 50%">
-      <img src="https://www.google.com/s2/favicons?sz=64&domain=github.io" alt="GitHub" style="margin-right: 10px;">
-      GitHub
-    </a><br><br>高校の文化祭でフォトブースシステムを制作<br>I created a photo booth system for the high school cultural
-    festival.<br>⇓
+  style="display: inline-flex; align-items: center; width: 40%;">
+  <img src="https://www.google.com/s2/favicons?sz=64&domain=github.io" alt="GitHub" style="margin-right: 10px;">
+  GitHub
+</a>
+
+    <p>高校の文化祭でフォトブースシステムを制作<br>
+       I created a photo booth system for the high school cultural festival.<br>⇓
+    </p>
   </div>
 
   <iframe src="https://www.youtube.com/embed/ul3hGIHvoWw" title="YouTube video" allowfullscreen></iframe>
 
-  <script>
-    function toggleInstagramOptions(event) {
-      event.preventDefault();
-      document.getElementById("instagram-options").classList.toggle("show");
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
-
 </html>
