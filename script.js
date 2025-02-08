@@ -40,10 +40,6 @@ document.querySelectorAll('.social-link').forEach(function(button) {
         else if (button.href.includes('youtube.com')) {
             eventLabel = 'YouTube';
         }
-        // その他のInstagramリンク
-        else if (button.href.includes('instagram.com')) {
-            eventLabel = 'Instagram Link';
-        }
         // Googleフォーム（Contactフォーム）
         else if (button.href.includes('docs.google.com')) {
             eventLabel = 'Contact Form';
@@ -62,7 +58,7 @@ document.querySelectorAll('.social-link').forEach(function(button) {
         }
 
         // Google Analyticsにイベントを送信
-        gtag('event', 'Button Click', {
+        gtag('event', 'click', {
     'event_category': 'LINKs',
     'event_label': eventLabel,
     'value': 1
