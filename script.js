@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.gtag = gtag;
 
   gtag("js", new Date());
-  gtag("config", "G-5V00F9RQS5");
+  gtag("config", "G-K1VC5MW2X8");
 })();
 
 // Instagramのトグルボタンのクリックイベントをトラッキング
