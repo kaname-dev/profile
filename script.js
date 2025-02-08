@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function() {
 var gtagScript = document.createElement("script");
 gtagScript.async = true;
-gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-YMR34WMTNF";
+gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-X18FXH04FH";
 document.head.appendChild(gtagScript);
 
 window.dataLayer = window.dataLayer || [];
@@ -17,12 +17,15 @@ function gtag(){ dataLayer.push(arguments); }
 window.gtag = gtag;
 
 gtag("js", new Date());
-gtag("config", "G-YMR34WMTNF");
+gtag("config", "G-X18FXH04FH");
 })();
 
 // SNSリンクボタンのクリックイベントをそれぞれトラッキング
 document.querySelectorAll('.social-link').forEach(function(button) {
     button.addEventListener('click', function(event) {
+      // #instagram-toggle だったら何もしない
+        if (event.target.id === 'instagram-toggle') return;
+      
         let eventLabel = '';
 
         
