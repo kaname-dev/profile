@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Instagramリンクボタンがクリックされたとき
 document.getElementById('instagram-toggle').addEventListener('click', function() {
-    gtag('event', 'click', {
+    gtag('event', 'links', {
         'event_category': 'Social Links',
         'event_label': 'Instagram Toggle'
     });
@@ -30,7 +30,7 @@ document.getElementById('instagram-toggle').addEventListener('click', function()
 
 // LinkedInリンクボタンがクリックされたとき
 document.querySelectorAll('.social-link')[0].addEventListener('click', function() {
-    gtag('event', 'click', {
+    gtag('event', 'links', {
         'event_category': 'Social Links',
         'event_label': 'LinkedIn'
     });
@@ -38,10 +38,10 @@ document.querySelectorAll('.social-link')[0].addEventListener('click', function(
 
 // YouTubeリンクボタンがクリックされたとき
 document.querySelectorAll('.social-link')[1].addEventListener('click', function() {
-    gtag('event', 'click', {
+    gtag('event', 'links', {
         'event_category': 'Social Links',
         'event_label': 'YouTube'
     });
 });
 
-// その他のボタンにも同様にイベントを追加できます
+
