@@ -25,12 +25,9 @@ document.querySelectorAll('.social-link').forEach(function(button) {
     button.addEventListener('click', function(event) {
         let eventLabel = '';
 
-        // Instagramのトグルボタン
-        if (button.id === 'instagram-toggle') {
-            eventLabel = 'Instagram Toggle';
-        }
+        
         // Instagramの選択肢（2つのInstagramリンク）
-        else if (button.href.includes('instagram.com/kay_codes')) {
+        if (button.href.includes('instagram.com/kay_codes')) {
             eventLabel = 'Instagram (coding)';
         } else if (button.href.includes('instagram.com/kana.06x_x')) {
             eventLabel = 'Instagram (private)';
