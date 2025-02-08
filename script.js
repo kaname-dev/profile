@@ -58,7 +58,7 @@ document.querySelectorAll('.social-link').forEach(function(button) {
         }
         else {
             // その他のリンクはテキストまたは画像altでラベル設定
-            eventLabel = button.textContent.trim() || button.querySelector('img').alt;
+           // eventLabel = button.textContent.trim() || button.querySelector('img').alt;
         }
 
         // Google Analyticsにイベントを送信
