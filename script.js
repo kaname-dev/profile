@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function() {
 var gtagScript = document.createElement("script");
 gtagScript.async = true;
-gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-5FPT6JEGG9";
+gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-1RTEK54519";
 document.head.appendChild(gtagScript);
 
 window.dataLayer = window.dataLayer || [];
@@ -17,7 +17,7 @@ function gtag(){ dataLayer.push(arguments); }
 window.gtag = gtag;
 
 gtag("js", new Date());
-gtag("config", "G-5FPT6JEGG9");
+gtag("config", "G-1RTEK54519");
 })();
 
 // SNSリンクボタンのクリックイベントをそれぞれトラッキング
@@ -47,7 +47,16 @@ document.querySelectorAll('.social-link').forEach(function(button) {
         // Googleフォーム（Contactフォーム）
         else if (button.href.includes('docs.google.com')) {
             eventLabel = 'Contact Form';
-        } else {
+        }
+        // GitHub HOME
+        else if (button.href.includes('https://github.com/kanamecode?tab=repositories')) {
+            eventLabel = 'GitHub HOME';
+        }
+        // GitHub Project
+        else if (button.href.includes('https://kanamecode.github.io/Photo-Booth-System/')) {
+            eventLabel = 'GitHub Project';
+        }
+        else {
             // その他のリンクはテキストまたは画像altでラベル設定
             eventLabel = button.textContent.trim() || button.querySelector('img').alt;
         }
