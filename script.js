@@ -15,17 +15,11 @@ gtag("config", "G-K1VC5MW2X8");
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Instagramオプションを表示するボタン
   document.getElementById("instagram-toggle").addEventListener("click", function (event) {
-      event.preventDefault();
-      document.getElementById("instagram-options").classList.toggle("show");
-
-      // Instagramのトグルボタンのクリックイベントをトラッキング
-      gtag('event', 'click', {
-          'event_category': 'Social Links',
-          'event_label': 'Instagram Toggle'
-      });
+    event.preventDefault();
+    document.getElementById("instagram-options").classList.toggle("show");
   });
+});
 
   // LinkedInリンクボタンがクリックされたとき
   document.querySelector('.social-link[href="https://linkedin.com/in/kaname-w-73799734a"]').addEventListener('click', function() {
