@@ -22,7 +22,7 @@ gtag("config", "G-5FPT6JEGG9");
 
 // SNSリンクボタンのクリックイベントをそれぞれトラッキング
 document.querySelectorAll('.social-link').forEach(function(button) {
-    button.addEventListener('button', function(event) {
+    button.addEventListener('click', function(event) {
         let eventLabel = '';
 
         
@@ -53,10 +53,12 @@ document.querySelectorAll('.social-link').forEach(function(button) {
         }
 
         // Google Analyticsにイベントを送信
-        gtag('event', 'button', {
-            'category': 'Social Links',
-            'LINKs': eventLabel,
-            'value': 1
-        });
+        gtag('event', 'Button Click', {
+    'event_category': 'LINKs',
+    'event_label': eventLabel,
+    'value': 1
+});
+
+
     });
 });
