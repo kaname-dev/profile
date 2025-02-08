@@ -23,24 +23,24 @@ document.addEventListener("DOMContentLoaded", function () {
 // Instagramリンクボタンがクリックされたとき
 document.getElementById('instagram-toggle').addEventListener('click', function() {
     gtag('event', 'links', {
-        'event_category': 'Social Links',
-        'event_label': 'Instagram Toggle'
+        'link_total': 'Social Links',
+        'links': 'Instagram Toggle'
     });
 });
 
 // LinkedInリンクボタンがクリックされたとき
 document.querySelectorAll('.social-link')[0].addEventListener('click', function() {
     gtag('event', 'links', {
-        'event_category': 'Social Links',
-        'event_label': 'LinkedIn'
+        'link_total': 'Social Links',
+        'links': 'LinkedIn'
     });
 });
 
 // YouTubeリンクボタンがクリックされたとき
 document.querySelectorAll('.social-link')[1].addEventListener('click', function() {
     gtag('event', 'links', {
-        'event_category': 'Social Links',
-        'event_label': 'YouTube'
+        'link_total': 'Social Links',
+        'links': 'YouTube'
     });
 });
 
