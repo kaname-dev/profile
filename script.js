@@ -22,7 +22,7 @@ gtag("config", "G-K1VC5MW2X8");
 
 // SNSリンクボタンのクリックイベントをそれぞれトラッキング
 document.querySelectorAll('.social-link').forEach(function(button) {
-    button.addEventListener('click', function(event) {
+    button.addEventListener('button', function(event) {
         let eventLabel = '';
 
         
@@ -53,9 +53,9 @@ document.querySelectorAll('.social-link').forEach(function(button) {
         }
 
         // Google Analyticsにイベントを送信
-        gtag('event', 'click', {
-            'event_category': 'Social Links',
-            'event_label': eventLabel,
+        gtag('event', 'button', {
+            'category': 'Social Links',
+            'LINKs': eventLabel,
             'value': 1
         });
     });
