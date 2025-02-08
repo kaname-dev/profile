@@ -44,4 +44,22 @@ document.querySelectorAll('.social-link')[1].addEventListener('click', function(
     });
 });
 
+document.querySelectorAll('.social-link')[2].addEventListener('click', function() {
+    gtag('event', 'links', {
+        'link_total': 'Social Links',
+        'links': 'Contact'
+    });
+});
+document.querySelectorAll('.social-link')[3].addEventListener('click', function() {
+    gtag('event', 'links', {
+        'link_total': 'Social Links',
+        'links': 'GiHhub'
+    });
+});
+document.querySelectorAll('.social-link')[4].addEventListener('click', function() {
+    gtag('event', 'links', {
+        'link_total': 'Social Links',
+        'links': 'GiHhub Project'
+    });
+});
 
