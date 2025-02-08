@@ -20,26 +20,46 @@ gtag("js", new Date());
 gtag("config", "G-K1VC5MW2X8");
 })();
 
-// Instagramリンクボタンがクリックされたとき
-document.getElementById('instagram-toggle').addEventListener('click', function() {
-  gtag('event', 'links', {
-      'link_total': 'Social Links',
-      'links': 'Instagram Toggle'
-  });
-});
+// SNSリンクボタンのクリックイベントをそれぞれトラッキング
+document.querySelectorAll('.social-link').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+        let eventLabel = '';
 
-// LinkedInリンクボタンがクリックされたとき
-document.querySelectorAll('.social-link')[0].addEventListener('click', function() {
-  gtag('event', 'links', {
-      'link_total': 'Social Links',
-      'links': 'LinkedIn'
-  });
-});
+        // Instagramのトグルボタン
+        if (button.id === 'instagram-toggle') {
+            eventLabel = 'Instagram Toggle';
+        }
+        // Instagramの選択肢（2つのInstagramリンク）
+        else if (button.href.includes('instagram.com/kay_codes')) {
+            eventLabel = 'Instagram (coding)';
+        } else if (button.href.includes('instagram.com/kana.06x_x')) {
+            eventLabel = 'Instagram (private)';
+        }
+        // LinkedInリンク
+        else if (button.href.includes('linkedin.com')) {
+            eventLabel = 'LinkedIn';
+        }
+        // YouTubeリンク
+        else if (button.href.includes('youtube.com')) {
+            eventLabel = 'YouTube';
+        }
+        // その他のInstagramリンク
+        else if (button.href.includes('instagram.com')) {
+            eventLabel = 'Instagram Link';
+        }
+        // Googleフォーム（Contactフォーム）
+        else if (button.href.includes('docs.google.com')) {
+            eventLabel = 'Contact Form';
+        } else {
+            // その他のリンクはテキストまたは画像altでラベル設定
+            eventLabel = button.textContent.trim() || button.querySelector('img').alt;
+        }
 
-// YouTubeリンクボタンがクリックされたとき
-document.querySelectorAll('.social-link')[1].addEventListener('click', function() {
-  gtag('event', 'links', {
-      'link_total': 'Social Links',
-      'links': 'YouTube'
-  });
+        // Google Analyticsにイベントを送信
+        gtag('event', 'click', {
+            'event_category': 'Social Links',
+            'event_label': eventLabel,
+            'value': 1
+        });
+    });
 });
