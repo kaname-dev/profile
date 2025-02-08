@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function() {
 var gtagScript = document.createElement("script");
 gtagScript.async = true;
-gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-K1VC5MW2X8";
+gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-5FPT6JEGG9";
 document.head.appendChild(gtagScript);
 
 window.dataLayer = window.dataLayer || [];
@@ -17,7 +17,7 @@ function gtag(){ dataLayer.push(arguments); }
 window.gtag = gtag;
 
 gtag("js", new Date());
-gtag("config", "G-K1VC5MW2X8");
+gtag("config", "G-5FPT6JEGG9");
 })();
 
 // SNSリンクボタンのクリックイベントをそれぞれトラッキング
