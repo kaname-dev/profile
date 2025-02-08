@@ -263,19 +263,27 @@
 
 
         function addToWallet() {
-            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-            if (!isIOS) {
-                return;
-            }
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (!isIOS) {
+        return;
+    }
 
-            const pkpassUrl = 'assets/pass.pkpass';  // .pkpass のパス
-            const a = document.createElement('a');
-            a.href = pkpassUrl;
-            a.download = 'business_card.pkpass';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
+    // Google Analyticsでイベントトラッキング
+    gtag('event', 'add_to_wallet', {
+        'event_category': 'business_card',
+        'event_label': 'Business Card Added to Wallet',
+        'value': 1
+    });
+
+    const pkpassUrl = 'assets/pass.pkpass';  // .pkpass のパス
+    const a = document.createElement('a');
+    a.href = pkpassUrl;
+    a.download = 'business_card.pkpass';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 
          // analytics.js
         (function () {
