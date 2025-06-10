@@ -241,15 +241,15 @@
         window.addEventListener('touchend', endDrag);
         cardContainer.addEventListener('touchleave', endDrag);
 
-        // メッセージをフェードイン
+
         // メッセージをフェードイン
         const showMessage = () => {
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
             if (isIOS) {
-                message.innerHTML = "名刺をタップしてウォレットに追加<br>Tap the business card to add to Apple Wallet<br>OR<br>長押しして画像として保存<br>Long press to save as image";
+                message.innerHTML = "名刺をタップして連絡先に追加<br>Tap the business card to add to contacts<br>OR<br>長押しして画像として保存<br>Long press to save as image";
             } else if (window.innerWidth <= 768) {
-                message.innerHTML = "名刺(画像)を長押しして保存<br>Long press the business card (image) to save it";
+                message.innerHTML = "名刺をタップして連絡先に追加<br>Tap the business card to add to contacts<br>OR<br>長押しして画像として保存<br>Long press to save as image";
             } else {
                 message.innerHTML = "名刺(画像)を右クリックして保存<br>Right click the business card (image) to save it";
             }
@@ -262,11 +262,22 @@
         }
 
 
-        function addToWallet() {
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (!isIOS) {
+    function addToWallet() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (!isMobile) {
         return;
     }
+
+    const vcfUrl = 'assets/contact.vcf';  // 用意してあるVCFファイルのパス
+
+    const a = document.createElement('a');
+    a.href = vcfUrl;
+    a.download = 'contact.vcf';  // ダウンロード時のファイル名
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
     // Google Analyticsでイベントトラッキング
     gtag('event', 'add_to_wallet', {
@@ -275,14 +286,7 @@
         'value': 1
     });
 
-    const pkpassUrl = 'assets/pass.pkpass';  // .pkpass のパス
-    const a = document.createElement('a');
-    a.href = pkpassUrl;
-    a.download = 'business_card.pkpass';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
+
 
 
          // analytics.js
